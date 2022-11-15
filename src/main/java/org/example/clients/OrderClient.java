@@ -13,7 +13,7 @@ public class OrderClient extends Client {
     private static final String CANCEL_PATH = "/api/v1/orders/cancel?track=";
 
     @Step("Создание заказа")
-    public ValidatableResponse create(Order order) {
+    public ValidatableResponse createOrder(Order order) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
@@ -25,7 +25,7 @@ public class OrderClient extends Client {
     }
 
     @Step("Получение списка заказов")
-    public ValidatableResponse check() {
+    public ValidatableResponse checkOrderList() {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
@@ -36,7 +36,7 @@ public class OrderClient extends Client {
     }
 
     @Step("Отмена заказа")
-    public ValidatableResponse cancel(int track) {
+    public ValidatableResponse cancelOrder(int track) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест

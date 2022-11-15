@@ -15,7 +15,7 @@ public class CourierClient extends Client {
     private static final String DELETE_PATH = "/api/v1/courier/";
 
     @Step("Создание курьера")
-    public ValidatableResponse create(Courier courier) {
+    public ValidatableResponse createCourier(Courier courier) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
@@ -27,7 +27,7 @@ public class CourierClient extends Client {
     }
 
     @Step("Логин курьера")
-    public ValidatableResponse login(Credentials credentials) {
+    public ValidatableResponse loginCourier(Credentials credentials) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
@@ -39,7 +39,7 @@ public class CourierClient extends Client {
     }
 
     @Step("Логин курьера без логина")
-    public ValidatableResponse loginPassword(CredentialsWithoutLogin credentialsWithoutLogin) {
+    public ValidatableResponse loginCourierWithoutLogin(CredentialsWithoutLogin credentialsWithoutLogin) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
@@ -51,7 +51,7 @@ public class CourierClient extends Client {
     }
 
     @Step("Логин курьера без пароля")
-    public ValidatableResponse loginLogin(CredentialsWithoutPassword credentialsWithoutPassword) {
+    public ValidatableResponse loginCourierWithoutPassword(CredentialsWithoutPassword credentialsWithoutPassword) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
@@ -63,7 +63,7 @@ public class CourierClient extends Client {
     }
 
     @Step("Удаление курьера")
-    public ValidatableResponse delete(int id) {
+    public ValidatableResponse deleteCourier(int id) {
         return given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
