@@ -3,10 +3,8 @@ package org.example.clients;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.example.models.Order;
-import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class OrderClient extends Client {
     private static final String CREATE_ORDER_PATH = "/api/v1/orders";
@@ -46,14 +44,14 @@ public class OrderClient extends Client {
                 .log().all(); // логируем респонс
     }
 
-    @Test
-    public ValidatableResponse checkTrackInList(int track) {
-        return given()
-                .spec(getSpec())
-                .log().all()
-                .when()
-                .get(CREATE_ORDER_PATH)
-                .then().assertThat().body("orders.id", equalTo(track))
-                .log().all();
-    }
+//    @Step("Проверка трека")
+//    public ValidatableResponse checkTrackInList(int track) {
+//        return given()
+//                .spec(getSpec())
+//                .log().all()
+//                .when()
+//                .get(CREATE_ORDER_PATH)
+//                .then().assertThat().body("orders.id", equalTo(track))
+//                .log().all();
+//    }
 }
