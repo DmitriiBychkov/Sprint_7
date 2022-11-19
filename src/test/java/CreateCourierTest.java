@@ -32,7 +32,7 @@ public class CreateCourierTest {
     }
 
     @Test
-    @DisplayName("Создание курьера возможно")
+    @DisplayName("При успешном создании курьера, создаётся его id")
     public void courierCanBeCreated() {
         ValidatableResponse responseCreate = courierClient.createCourier(courier);
         ValidatableResponse responseLogin = courierClient.loginCourier(Credentials.from(courier));
@@ -46,7 +46,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Создание дубля курьера невозможно")
     public void courierCanNotBeCreatedDouble() {
-        ValidatableResponse responseCreate = courierClient.createCourier(courier);
+        courierClient.createCourier(courier);
         ValidatableResponse responseLogin = courierClient.loginCourier(Credentials.from(courier));
         ValidatableResponse responseCreateDouble = courierClient.createCourier(courier);
         id = responseLogin.extract().path("id");

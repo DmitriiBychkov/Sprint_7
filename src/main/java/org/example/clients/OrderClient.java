@@ -34,24 +34,13 @@ public class OrderClient extends Client {
     }
 
     @Step("Отмена заказа")
-    public ValidatableResponse cancelOrder(int track) {
-        return given()
+    public void cancelOrder(int track) {
+        given()
                 .spec(getSpec())
                 .log().all() // логируем реквест
                 .when()
                 .put(CANCEL_PATH + track)
                 .then()
-                .log().all(); // логируем респонс
+                .log().all();
     }
-
-//    @Step("Проверка трека")
-//    public ValidatableResponse checkTrackInList(int track) {
-//        return given()
-//                .spec(getSpec())
-//                .log().all()
-//                .when()
-//                .get(CREATE_ORDER_PATH)
-//                .then().assertThat().body("orders.id", equalTo(track))
-//                .log().all();
-//    }
 }

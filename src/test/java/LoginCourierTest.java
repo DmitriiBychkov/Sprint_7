@@ -1,3 +1,4 @@
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.example.clients.CourierClient;
 import org.example.generators.CourierGenerator;
@@ -15,7 +16,6 @@ import static org.apache.http.HttpStatus.*;
 public class LoginCourierTest {
     private CourierClient courierClient;
     private Courier courier;
-    private Courier courierWithoutLogin;
     private Courier courierWithoutPassword;
     private int id;
 
@@ -23,7 +23,6 @@ public class LoginCourierTest {
     public void setUp() {
         courierClient = new CourierClient();
         courier = CourierGenerator.getRandomCourier();
-        courierWithoutLogin = CourierGenerator.getWithoutLogin();
         courierWithoutPassword = CourierGenerator.getWithoutPassword();
     }
 
@@ -33,8 +32,9 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Логин курьера возможен и возвращает id")
     public void courierCanBeLoginAndReturnId() {
-        ValidatableResponse responseCreate = courierClient.createCourier(courier);
+        courierClient.createCourier(courier);
         ValidatableResponse responseLogin = courierClient.loginCourier(Credentials.from(courier));
         id = responseLogin.extract().path("id");
         int statusCodeLogin = responseLogin.extract().statusCode();
@@ -42,8 +42,9 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Логин курьера невозможен, если курьер не создан")
     public void wrongLoginReturnError() {
-        ValidatableResponse responseCreate = courierClient.createCourier(courierWithoutPassword);
+        courierClient.createCourier(courierWithoutPassword);
         ValidatableResponse responseLogin = courierClient.loginCourier(Credentials.from(courier));
         String actualMessage = responseLogin.extract().path("message");
         Assert.assertEquals("Wrong message - wrong login", "Учетная запись не найдена", actualMessage);
@@ -52,9 +53,12 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Логин курьера невозможен без ввода логина")
     public void loginWithoutEnterLogin() {
-        ValidatableResponse responseCreate = courierClient.createCourier(courier);
+        courierClient.createCourier(courier);
         ValidatableResponse responseLogin = courierClient.loginCourierWithoutLogin(CredentialsWithoutLogin.from(courier));
+        ValidatableResponse responseLoginForDelete = courierClient.loginCourier(Credentials.from(courier));
+        id = responseLoginForDelete.extract().path("id");
         String actualMessage = responseLogin.extract().path("message");
         Assert.assertEquals("Wrong message without enter login", "Недостаточно данных для входа", actualMessage);
         int statusCode = responseLogin.extract().statusCode();
@@ -62,9 +66,12 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Логин курьера невозможен без ввода пароля")
     public void loginWithoutEnterPassword() {
-        ValidatableResponse responseCreate = courierClient.createCourier(courier);
+        courierClient.createCourier(courier);
         ValidatableResponse responseLogin = courierClient.loginCourierWithoutPassword(CredentialsWithoutPassword.from(courier));
+        ValidatableResponse responseLoginForDelete = courierClient.loginCourier(Credentials.from(courier));
+        id = responseLoginForDelete.extract().path("id");
         String actualMessage = responseLogin.extract().path("message");
         Assert.assertEquals("Wrong message without enter password", "Недостаточно данных для входа", actualMessage);
         int statusCode = responseLogin.extract().statusCode();

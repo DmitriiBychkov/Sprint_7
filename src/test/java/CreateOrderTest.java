@@ -15,7 +15,7 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
     private OrderClient orderClient;
-    private Order order;
+    private final Order order;
     private int track;
 
 
@@ -44,7 +44,7 @@ public class CreateOrderTest {
     }
 
     @Test
-    @DisplayName("Создание заказа с треком")
+    @DisplayName("При успешном создании заказа создаётся трек")
     public void orderCanBeCreatedWithTrack() {
         ValidatableResponse response = orderClient.createOrder(order);
         track = response.extract().path("track");
